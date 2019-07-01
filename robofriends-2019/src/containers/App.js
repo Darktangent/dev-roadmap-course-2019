@@ -3,6 +3,7 @@ import CardList from "../components/CardList"
 // import {robots} from "./robots"
 import SearchBox from "../components/SearchBox"
 import Scroll from "../components/Scroll"
+import ErrorBoundary from "../components/ErrorBoundary.js"
 export default class App extends React.Component {
 	// static propTypes = {
 	// 	name: React.PropTypes.string,
@@ -17,6 +18,8 @@ export default class App extends React.Component {
 		this.onSearchChange=this.onSearchChange.bind(this)
 	}
 	componentDidMount(){
+		console.log(this.props.store)
+		console.log("a")
 		fetch(`https://jsonplaceholder.typicode.com/users`).then(response=>{
 			return response.json()
 		}).then(users=>{
@@ -42,7 +45,9 @@ export default class App extends React.Component {
 				<h1 className="heading-main">Robofriends</h1>
 				<SearchBox searchChange={this.onSearchChange} />
 				<Scroll>
+				<ErrorBoundary>
 				<CardList robots={filteredRobots} />
+				</ErrorBoundary>
 				</Scroll>
 			</div>
 		)}
